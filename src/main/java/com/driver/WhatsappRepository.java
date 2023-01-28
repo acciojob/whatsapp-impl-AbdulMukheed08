@@ -9,14 +9,14 @@ public class WhatsappRepository {
 
     //Assume that each user belongs to at most one group
     //You can use the below mentioned hashmaps or delete these and create your own.
-    private static HashMap<Group, List<User>> groupUserMap;
-    private static HashMap<Group, List<Message>> groupMessageMap;
+    private HashMap<Group, List<User>> groupUserMap;
+    private HashMap<Group, List<Message>> groupMessageMap;
     private HashMap<Message, User> senderMap;
-    private static HashMap<Group, User> adminMap;
-    private static HashSet<String> userMobile;
-    private static int customGroupCount;
-    private static int messageId=0;
-    private static int groupInd = 0;
+    private  HashMap<Group, User> adminMap;
+    private  HashSet<String> userMobile;
+    private  int customGroupCount;
+    private int messageId=0;
+    private int groupInd = 0;
 
     public WhatsappRepository(){
         this.groupMessageMap = new HashMap<Group, List<Message>>();
@@ -28,7 +28,7 @@ public class WhatsappRepository {
         this.messageId = 0;
     }
 
-    public static String saveUser(String name, String mobile) {
+    public String saveUser(String name, String mobile) {
         if(userMobile.contains(mobile)){
             throw new RuntimeException("User already exists");
         }
@@ -37,27 +37,27 @@ public class WhatsappRepository {
     }
 
 
-    public static Group saveGroup(List<User> users) {
+    public Group saveGroup(List<User> users) {
         Group g;
         if(users.size()==2){
             g = new Group(users.get(1).getName(),2);
         }
         else {
-            customGroupCount++;
-            g = new Group("Group " + String.valueOf(customGroupCount), users.size());
+            this.customGroupCount++;
+            g = new Group("Group " + String.valueOf(this.customGroupCount), users.size());
         }
         groupUserMap.put(g,users);
-        adminMap.put(g,users.get(0));
+        this.adminMap.put(g,users.get(0));
         return g;
     }
 
-    public static int saveMessage(String content) {
-        messageId++;
-        Message m = new Message(messageId,content);
-        return messageId;
+    public int saveMessage(String content) {
+        this.messageId++;
+        Message m = new Message(this.messageId,content);
+        return this.messageId;
     }
 
-    public static int sendMessage(Message message, User sender, Group group) {
+    public int sendMessage(Message message, User sender, Group group) {
         if(!groupUserMap.containsKey(group)){
             throw new RuntimeException("Group does not exist");
         }
@@ -75,7 +75,7 @@ public class WhatsappRepository {
         throw new RuntimeException("You are not allowed to send message");
     }
 
-    public static String changeAdmin(User approver, User user, Group group) {
+    public String changeAdmin(User approver, User user, Group group) {
         if(!groupUserMap.containsKey(group)){
             throw new RuntimeException("Group does not exist");
         }
