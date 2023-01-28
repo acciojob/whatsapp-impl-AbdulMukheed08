@@ -14,7 +14,7 @@ public class WhatsappRepository {
     private HashMap<Message, User> senderMap;
     private static HashMap<Group, User> adminMap;
     private static HashSet<String> userMobile;
-    private int customGroupCount;
+    private static int customGroupCount;
     private static int messageId=0;
     private static int groupInd = 0;
 
@@ -43,8 +43,8 @@ public class WhatsappRepository {
             g = new Group(users.get(1).getName(),2);
         }
         else {
-            groupInd++;
-            g = new Group("Group " + groupInd, users.size());
+            customGroupCount++;
+            g = new Group("Group " + customGroupCount, users.size());
         }
         groupUserMap.put(g,users);
         adminMap.put(g,users.get(0));

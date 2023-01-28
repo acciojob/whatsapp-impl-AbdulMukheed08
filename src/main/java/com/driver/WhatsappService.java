@@ -5,13 +5,7 @@ import java.util.List;
 public class WhatsappService {
     public String createUser(String name, String mobile)throws RuntimeException {
 
-        try{
-            return WhatsappRepository.saveUser(name,mobile);
-        }
-        catch(Exception e){
-            return e.toString();
-        }
-
+        return WhatsappRepository.saveUser(name,mobile);
     }
 
     public Group createGroup(List<User> users) {
